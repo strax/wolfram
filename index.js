@@ -5,12 +5,22 @@ var Client = exports.Client = function Client(appKey) {
   this.appKey = appKey
 }
 
-Client.prototype.query = function(input, cb) {
+Client.prototype.query = function(input, options, cb) {
   if(!this.appKey) {
     return cb("Application key not set", null)
   }
-
-  var uri = 'http://api.wolframalpha.com/v2/query?input=' + encodeURIComponent(input) + '&primary=true&appid=' + this.appKey
+  
+  if(typeof options === 'function') {
+    cb = options;
+    options = {primary: true};
+  }
+  
+  var query = '';
+  for(var i in options) {
+    query += '&' + i + '=' + options[i];
+  }
+  
+  var uri = 'http://api.wolframalpha.com/v2/query?input=' + encodeURIComponent(input) + query + '&appid=' + this.appKey
 
   request(uri, function(error, response, body) {
     if(!error && response.statusCode == 200) {
