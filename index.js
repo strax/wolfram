@@ -17,7 +17,7 @@ Client.prototype.query = function(input, options, cb) {
   
   var query = '';
   for(var i in options) {
-    query += '&' + i + '=' + options[i];
+    query += '&' + i + '=' + encodeURIComponent(options[i]);
   }
   
   var uri = 'http://api.wolframalpha.com/v2/query?input=' + encodeURIComponent(input) + query + '&appid=' + this.appKey
