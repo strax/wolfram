@@ -9,8 +9,19 @@ Client.prototype.query = function(input, cb) {
   if(!this.appKey) {
     return cb("Application key not set", null)
   }
+  var options;
+  var search;
+  if(typeof(input) === 'object') {
+    // If an ojbect is passed, look for search string and options
+    search  = input.search;
+    options = input.options;
+  } else {
+    // If it's not an object, assume it's the search string
+    search = input;
+    options = "";
+  }
 
-  var uri = 'http://api.wolframalpha.com/v2/query?input=' + encodeURIComponent(input) + '&primary=true&appid=' + this.appKey
+  var uri = 'http://api.wolframalpha.com/v2/query?input=' + encodeURIComponent(search) + '&primary=true&appid=' + this.appKey + options;
 
   request(uri, function(error, response, body) {
     if(!error && response.statusCode == 200) {
