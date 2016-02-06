@@ -10,9 +10,14 @@ Client.prototype.query = function(input, cb) {
     return cb("Application key not set", null)
   }
 
-  var uri = 'http://api.wolframalpha.com/v2/query?input=' + encodeURIComponent(input) + '&primary=true&appid=' + this.appKey
+  var uri = 'http://api.wolframalpha.com/v2/query'
+  var query = {
+    input: input,
+    primary: true,
+    appid: this.appKey
+  }
 
-  request(uri, function(error, response, body) {
+  request(uri, query, function(error, response, body) {
     if(!error && response.statusCode == 200) {
       var doc = xml.parseXml(body), root = doc.root()
 
@@ -21,7 +26,7 @@ Client.prototype.query = function(input, cb) {
         return cb(message, null)
       } else {
         var pods = root.find('pod').map(function(pod) {
-       	  var title = pod.attr('title').value();
+          var title = pod.attr('title').value();
           var subpods = pod.find('subpod').map(function(node) {
             return {
               title: node.attr('title').value(),
