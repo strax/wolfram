@@ -1,4 +1,5 @@
 wolfram [![Build Status](https://travis-ci.org/strax/node-wolfram.svg?branch=master)](https://travis-ci.org/strax/node-wolfram)
+[![API Testing](https://img.shields.io/badge/API%20Test-RapidAPI-blue.svg)](https://rapidapi.com/package/WolframAlpha/functions?utm_source=WolframAlphaGithub&utm_medium=button&utm_content=Vender_Github)
 =================================================
 
 Wolfram is a simple Wolfram|Alpha API wrapper for Node.js with support for both plaintext and image results.
